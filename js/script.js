@@ -170,6 +170,11 @@ var notificationMenu = (function () {
                 refreshBody(dataJSON);
             }
 
+            /***********************************************************************
+             **
+             ** Used to refresh
+             **
+             ***********************************************************************/
             function refreshBody(dataJSON) {
                 var toggleNote = "#" + elementID + "_toggleNote";
                 $(toggleNote).hide();
