@@ -1,4 +1,4 @@
- # Material-Dashboard-Cards-as-HTML-or-for-Apex
+# Apex-Notification-Menu-for-NavBar
 
 ![Screenshot](https://github.com/RonnyWeiss/Apex-Notification-Menu-for-NavBar/blob/master/screenshot.gif?raw=true)
 
