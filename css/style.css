@@ -13,6 +13,7 @@
         user-select: none;
         cursor: pointer;
     }
+    
     .toggleNotifications .show {
         -webkit-box-flex: 1;
         -ms-flex: 1;
@@ -28,19 +29,23 @@
         transition: all 1s;
         cursor: pointer;
     }
+    
     .toggleNotifications .show:hover {
         background: black;
     }
+    
     .toggleNotifications .show i {
         line-height: 28px;
         color: white;
     }
+    
     .count {
         position: absolute;
         top: -2px;
         right: 7px;
         cursor: pointer;
     }
+    
     .count .num {
         position: absolute;
         top: 0px;
@@ -59,8 +64,10 @@
         transition: all 0.3s;
         color: white;
     }
+    
     .notifications {
-        position: absolute;
+        position: fixed;
+        /* Pull from https://github.com/allipierre */
         top: 42px;
         right: 10px;
         width: 400px;
@@ -72,12 +79,14 @@
         max-height: 75vh;
         overflow: auto;
     }
+    
     @media only screen and (max-width: 680px) {
         .notifications {
             width: 85vw;
             max-width: 400px;
         }
     }
+    
     .notificationstoggle {
         display: none;
     }
@@ -116,6 +125,7 @@
         color: rgb(70, 70, 70);
         padding-left: 5px;
     }
+    
     .notifications .note .note-info {
         display: block;
         padding: 0 30px 20px 40px;
@@ -128,6 +138,7 @@
         width: 100%;
         line-height: 20px;
     }
+    
     @keyframes fa-blink {
         0% {
             opacity: 1;
@@ -139,6 +150,7 @@
             opacity: 1;
         }
     }
+    
     .fa-blink {
         -webkit-animation: fa-blink 2s linear infinite;
         -moz-animation: fa-blink 2s linear infinite;
@@ -146,9 +158,11 @@
         -o-animation: fa-blink 2s linear infinite;
         animation: fa-blink 2s linear infinite;
     }
+    
     .notifications a {
         text-decoration: none
     }
+    
     .notifications .note .note-header {
         font-weight: bold;
         text-overflow: ellipsis;
@@ -158,12 +172,15 @@
         padding-right: 10px;
         line-height: 40px;
     }
+    
     .notifications .note:first-of-type {
         margin-top: 0px;
     }
+    
     .notifications .note:hover {
         box-shadow: -5px 0px 0px 0px rgb(70, 70, 70) !important;
     }
+    
     .notifications .note .note-header i {
         position: relative;
         top: -1px;
