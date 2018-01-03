@@ -1,6 +1,6 @@
 var notificationMenu = (function () {
     "use strict";
-    var scriptVersion = "1.0";
+    var scriptVersion = "1.0.3";
     return {
 
         initialize: function (elementID, ajaxID, udConfigJSON, items2Submit) {
@@ -213,12 +213,20 @@ var notificationMenu = (function () {
                     for (var item = 0; item < dataJSON.row.length; item++) {
 
                         var a = $("<a></a>");
+
                         if (dataJSON.row[item].NOTE_LINK) {
                             a.attr("href", dataJSON.row[item].NOTE_LINK);
                             if (configJSON.linkTargetBlank) {
                                 a.attr("target", "_blank");
                             }
+                            a.on('touchstart click', function (e) {
+                                if (div.attr('toggled') == 'false') {
+                                    div.attr("toggled", true);
+                                    $(ul).fadeToggle("fast");
+                                }
+                            });
                         }
+
                         var li = $("<li></li>");
                         li.addClass("note");
                         if (dataJSON.row[item].NOTE_COLOR) {
