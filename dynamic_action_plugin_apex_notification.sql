@@ -66,7 +66,7 @@ wwv_flow_api.create_plugin(
 '        APEX_JAVASCRIPT.ADD_VALUE( P_DYNAMIC_ACTION.ATTRIBUTE_02, TRUE ) ||',
 '        APEX_JAVASCRIPT.ADD_VALUE( APEX_PLUGIN.GET_AJAX_IDENTIFIER, TRUE ) ||',
 '        APEX_JAVASCRIPT.ADD_VALUE( P_DYNAMIC_ACTION.ATTRIBUTE_01, TRUE ) ||',
-'        APEX_JAVASCRIPT.ADD_VALUE( P_DYNAMIC_ACTION.ATTRIBUTE_03, FALSE ) ||',
+'        APEX_JAVASCRIPT.ADD_VALUE( APEX_PLUGIN_UTIL.PAGE_ITEM_NAMES_TO_JQUERY(P_DYNAMIC_ACTION.ATTRIBUTE_03), FALSE ) ||',
 '        '');}'';',
 '',
 '        RETURN L_RESULT;',
@@ -76,11 +76,11 @@ wwv_flow_api.create_plugin(
 ,p_ajax_function=>'F_AJAX'
 ,p_substitute_attributes=>true
 ,p_subscribe_plugin_settings=>true
-,p_version_identifier=>'1.0.1'
+,p_version_identifier=>'1.0.2'
 ,p_about_url=>'https://github.com/RonnyWeiss/Apex-Notification-Menu-for-NavBar'
 ,p_plugin_comment=>'This dynamic action plugin allows to render a notification menu which gets its information through an SQL statement. It also has many configuration options and an automatic refresh (if desired). Unfortunately, it is only available with the Universal '
 ||'Theme 1.1 in Apex 5.1.1 or above. If you want to use it in older Themes then you have to customize the CSS style.'
-,p_files_version=>1113
+,p_files_version=>1114
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(121141676570382532776)
