@@ -1,9 +1,54 @@
 var notificationMenu = (function () {
     "use strict";
-    var scriptVersion = "1.0.3";
+    var scriptVersion = "1.0.4";
+    var util = {
+        version: "1.0",
+        escapeHTML: function (str) {
+            if (str && str.length > 0) {
+                try {
+                    return apex.util.escapeHTML(str.toString());
+                } catch (e) {
+                    return str
+                        .toString()
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/"/g, "&quot;")
+                        .replace(/'/g, "&#x27;")
+                        .replace(/\//g, "&#x2F;");
+                }
+            }
+        },
+        jsonSaveExtend: function (srcConfig, targetConfig) {
+            var finalConfig = {};
+            /* try to parse config json when string or just set */
+            if (typeof targetConfig === 'string') {
+                try {
+                    targetConfig = JSON.parse(targetConfig);
+                } catch (e) {
+                    console.log("Error while try to parse udConfigJSON. Please check your Config JSON. Standard Config will be used.");
+                    console.log(e);
+                    console.log(targetConfig);
+                }
+            } else {
+                finalConfig = targetConfig;
+            }
+            /* try to merge with standard if any attribute is missing */
+            try {
+                finalConfig = $.extend(true, srcConfig, targetConfig);
+            } catch (e) {
+                console.log('Error while try to merge udConfigJSON into Standard JSON if any attribute is missing. Please check your Config JSON. Standard Config will be used.');
+                console.log(e);
+                finalConfig = srcConfig;
+                console.log(finalConfig);
+            }
+            return finalConfig;
+        }
+    };
+
     return {
 
-        initialize: function (elementID, ajaxID, udConfigJSON, items2Submit) {
+        initialize: function (elementID, ajaxID, udConfigJSON, items2Submit, escapeRequired) {
             var stdConfigJSON = {
                 "refresh": 0,
                 "mainIcon": "fa-bell",
@@ -15,32 +60,11 @@ var notificationMenu = (function () {
                 "linkTargetBlank": true
             };
             var configJSON = {};
+            configJSON = util.jsonSaveExtend(stdConfigJSON, udConfigJSON);
+
 
             /* define container and add it to parent */
             var container = drawContainer();
-
-            /* try to parse config json when string or just set */
-            if (typeof udConfigJSON == 'string') {
-                try {
-                    configJSON = JSON.parse(udConfigJSON);
-                } catch (e) {
-                    console.log("Error while try to parse udConfigJSON. Please check your Config JSON. Standard Config will be used.");
-                    console.log(e);
-                    console.log(udConfigJSON);
-                    configJSON = {};
-                }
-            } else {
-                configJSON = udConfigJSON;
-            }
-            /* try to merge with standard if any attribute is missing */
-            try {
-                configJSON = $.extend(true, stdConfigJSON, configJSON);
-            } catch (e) {
-                console.log('Error while try to merge udConfigJSON into Standard JSON if any attribute is missing. Please check your Config JSON. Standard Config will be used.');
-                console.log(e);
-                configJSON = stdConfigJSON;
-                console.log(configJSON);
-            }
 
             /* get data and draw */
             getData(drawBody);
@@ -110,6 +134,15 @@ var notificationMenu = (function () {
              **
              ***********************************************************************/
             function drawBody(dataJSON) {
+                if (escapeRequired !== false) {
+                    /* escape config */
+                    configJSON.counterBackgroundColor = util.escapeHTML(configJSON.counterBackgroundColor);
+                    configJSON.counterFontColor = util.escapeHTML(configJSON.counterFontColor);
+                    configJSON.mainIcon = util.escapeHTML(configJSON.mainIcon);
+                    configJSON.mainIconBackgroundColor = util.escapeHTML(configJSON.mainIconBackgroundColor);
+                    configJSON.mainIconColor = util.escapeHTML(configJSON.mainIconColor);
+                }
+
                 var div = $("<div></div>");
 
                 div.addClass("toggleNotifications");
@@ -211,6 +244,24 @@ var notificationMenu = (function () {
 
                 if (dataJSON.row) {
                     for (var item = 0; item < dataJSON.row.length; item++) {
+                        if (escapeRequired !== false) {
+                            /* escape data */
+                            if (dataJSON.row[item].NOTE_LINK) {
+                                dataJSON.row[item].NOTE_LINK = util.escapeHTML(dataJSON.row[item].NOTE_LINK);
+                            }
+                            if (dataJSON.row[item].NOTE_HEADER) {
+                                dataJSON.row[item].NOTE_HEADER = util.escapeHTML(dataJSON.row[item].NOTE_HEADER);
+                            }
+                            if (dataJSON.row[item].NOTE_ICON) {
+                                dataJSON.row[item].NOTE_ICON = util.escapeHTML(dataJSON.row[item].NOTE_ICON);
+                            }
+                            if (dataJSON.row[item].NOTE_ICON_COLOR) {
+                                dataJSON.row[item].NOTE_ICON_COLOR = util.escapeHTML(dataJSON.row[item].NOTE_ICON_COLOR);
+                            }
+                            if (dataJSON.row[item].NOTE_TEXT) {
+                                dataJSON.row[item].NOTE_TEXT = util.escapeHTML(dataJSON.row[item].NOTE_TEXT);
+                            }
+                        }
 
                         var a = $("<a></a>");
 
